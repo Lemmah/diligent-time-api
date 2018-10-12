@@ -5,15 +5,16 @@
     "sourceMap": true,
     "outDir": "./build",
     "rootDir": "./",
-    "downlevelIteration": true,
     "pretty": true,
     "strict": true,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "alwaysStrict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "esModuleInterop": true
   },
   "exclude": [
