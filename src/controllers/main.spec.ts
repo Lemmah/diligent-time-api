@@ -1,1 +1,1 @@
-console.log("Controller Tests are running");
+/* tslint:disable */

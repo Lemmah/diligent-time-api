@@ -1,0 +1,14 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:latest"
+    ],
+    "linterOptions": {
+        "exclude": [
+            "scr/**/*.spec.ts"
+        ]
+    },
+    "jsRules": {},
+    "rules": {},
+    "rulesDirectory": []
+}
