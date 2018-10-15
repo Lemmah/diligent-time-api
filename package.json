@@ -6,11 +6,32 @@
   "scripts": {
     "build": "rm -rf ./build/** && tsc",
     "start": "npm run build && node ./build/src/server.js",
-    "test": "mocha --opts mocha.opts",
+    "test": "mocha",
+    "test:coverage": "nyc mocha",
     "watch:test": "npm test -- --watch",
     "watch:ts": "tsc -w",
     "watch:node": "nodemon build/src/server.js",
     "start:dev": "concurrently -k -p \"[{name}]\" -n \"TypeScript, Node, Tests\" -c \"yello.bold, cyan.bold, teal.bold\" \"npm run watch:ts\" \"npm run watch:node\" \"npm run watch:test\""
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "**/*.spec.ts",
+      "build/",
+      "coverage/"
+    ],
+    "reporter": [
+      "html",
+      "text",
+      "text-lcov",
+      "lcov",
+      "clover"
+    ],
+    "all": true
   },
   "repository": {
     "type": "git",
@@ -34,8 +55,11 @@
     "@types/express": "^4.16.0",
     "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
+    "coveralls": "^3.0.2",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
+    "nyc": "^13.1.0",
+    "source-map-support": "^0.5.9",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.0",
