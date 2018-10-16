@@ -1,3 +1,3 @@
 /* tslint:disable */
-import { mainController } from "./main.controler";
+import { mainController } from "./main.controller";
 mainController;
