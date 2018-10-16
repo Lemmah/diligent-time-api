@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Lemmah/diligent-time-api.svg?style=svg)](https://circleci.com/gh/Lemmah/diligent-time-api)   [![Test Coverage](https://api.codeclimate.com/v1/badges/a84ea1977fec9bb60318/test_coverage)](https://codeclimate.com/github/Lemmah/diligent-time-api/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/a84ea1977fec9bb60318/maintainability)](https://codeclimate.com/github/Lemmah/diligent-time-api/maintainability)
+
 # Diligent Time API
 This is the API for the app that enables people to be more diligent in their use of time. This work started as a capstone project for the restacking process in Andela.
 
@@ -21,7 +23,7 @@ in your terminal and if its not greater than or equal to v8.12.0, you're not in 
 ### Installing
 Install `typescript` and `ts-node` globally. 
 All packages are installed by `npm install`.
-Run `npm start to view the application. Visit `localhost:3000`
+Run `npm start` to view the application. Visit `localhost:3000`
 For good development experience, run `npm run start:dev` which concurently watches for file changes in the tests and app. You can learn more about this script command by viewing the [package.json](/package.json) file.
 
 
