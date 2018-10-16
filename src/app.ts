@@ -1,5 +1,5 @@
-import express from "express";
 import * as bodyParser from "body-parser";
+import express from "express";
 import { mainRoutes } from "./routes/main.routes";
 
 class App {
