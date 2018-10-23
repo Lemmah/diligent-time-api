@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
+    "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "./build",
     "rootDir": "./",
@@ -14,8 +15,7 @@
     "strictFunctionTypes": true,
     "alwaysStrict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": false,
-    "esModuleInterop": true
+    "noUnusedParameters": false
   },
   "exclude": [
     "node_modules",
