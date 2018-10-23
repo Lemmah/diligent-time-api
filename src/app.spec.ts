@@ -1,5 +1,6 @@
 /* tslint:disable */
 import * as chai from "chai";
+import "mocha";
 
 const expect: Chai.ExpectStatic = chai.expect;
 
