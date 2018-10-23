@@ -1,6 +1,7 @@
 import * as chai from "chai";
 import { UserModel } from "./user.model";
-import User from "./../interfaces/user";
+import User from "../../interfaces/user";
+import "mocha";
 
 const expect = chai.expect;
 const testUser: User = {
