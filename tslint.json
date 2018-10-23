@@ -4,11 +4,18 @@
         "tslint:latest"
     ],
     "linterOptions": {
+<<<<<<< Updated upstream
+        "exclude": []
+=======
         "exclude": [
-            "scr/**/*.spec.ts"
+            "node_modules",
+            "**/*.spec.ts"
         ]
+>>>>>>> Stashed changes
     },
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "no-implicit-dependencies": [true, "dev"],
+    },
     "rulesDirectory": []
 }
