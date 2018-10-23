@@ -23,6 +23,10 @@ const UserSchema: mongoose.Schema = new Schema({
 });
 
 let UserModel: mongoose.Model<mongoose.Document>;
-UserModel = mongoose.model("User", UserSchema);
+try {
+  UserModel = mongoose.model("User", UserSchema);
+} catch (e) {
+  UserModel = mongoose.model("User");
+}
 
-export { UserModel };
+export default UserModel;

@@ -34,6 +34,10 @@ const TodoSchema: mongoose.Schema = new Schema({
 });
 
 let TodoModel: mongoose.Model<mongoose.Document>;
-TodoModel = mongoose.model("Todo", TodoSchema);
+try {
+  TodoModel = mongoose.model("Todo", TodoSchema);
+} catch (e) {
+  TodoModel = mongoose.model("Todo");
+}
 
-export { TodoModel };
+export default TodoModel;

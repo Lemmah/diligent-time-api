@@ -1,5 +1,5 @@
 import * as chai from "chai";
-import { TodoModel } from "./todo.model";
+import TodoModel from "./todo.model";
 import TodoItem from "../../interfaces/todo";
 import "mocha";
 

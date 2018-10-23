@@ -1,5 +1,5 @@
 import * as chai from "chai";
-import { UserModel } from "./user.model";
+import UserModel  from "./user.model";
 import User from "../../interfaces/user";
 import "mocha";
 
