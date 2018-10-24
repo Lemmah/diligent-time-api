@@ -9,9 +9,7 @@ class MainRoutes {
   }
 
   private config() {
-    this.router.get("/", (req: express.Request, res: express.Response) => {
-      mainController.root(req, res);
-    });
+    this.router.get("/", mainController.root);
   }
 }
 
