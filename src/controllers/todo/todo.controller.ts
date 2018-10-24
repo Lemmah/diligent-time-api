@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import { Document } from "mongoose";
-import TodoModel from "./../../models/todo/todo.model";
+import TodoItem from "../../interfaces/todo";
+import { TodoModel } from "./../../models/todo/todo.model";
 
 class TodoController {
-  public create(req: Request, res: Response): Promise<void> {
+  public create(req: Request, res: Response): void {
     const todoItem = new TodoModel(req.body);
-    return todoItem.save()
+    todoItem.save()
     .then((todo: Document): void => {
       res.status(201);
-      res.json({ status: true, message: todo.toObject() });
+      res.json({ status: true, message: todo});
     })
     .catch((error: Error): void => {
       res.status(500);
@@ -17,18 +18,50 @@ class TodoController {
   }
 
   public read(req: Request, res: Response): void {
-    res.status(200);
-    res.send();
+    TodoModel.find({})
+    .then((todos: Document[]): void => {
+      res.status(200);
+      res.json(todos);
+    })
+    .catch((error: Error): void => {
+      res.status(500);
+      res.json(error.message);
+    });
   }
 
   public update(req: Request, res: Response): void {
-    res.status(200);
-    res.send();
+    const complete: boolean = req.body.complete;
+    TodoModel.findById(req.params.id)
+    .then((todo: TodoItem | null): TodoItem => {
+      if (!todo) {
+        throw new Error("TodoItem not found");
+      }
+      todo.complete = complete;
+      return todo;
+    })
+    .then((todo: TodoItem): Promise<TodoItem> => {
+      return todo.save();
+    })
+    .then((todo: TodoItem): void => {
+      res.status(200);
+      res.json(todo);
+    })
+    .catch((error: Error) => {
+      res.status(500);
+      res.json(error);
+    });
   }
 
   public delete(req: Request, res: Response): void {
-    res.status(200);
-    res.send();
+    TodoModel.remove({ _id: req.params.id })
+    .then((todos: TodoItem[]) => {
+      res.status(200);
+      res.json({ status: true, message: "Todo Deleted Successfully!"});
+    })
+    .catch((error: Error) => {
+      res.status(500);
+      res.json({ status: false, error });
+    });
   }
 }
 
