@@ -1,10 +1,10 @@
 import * as chai from "chai";
-import TodoModel from "./todo.model";
+import { TodoModel } from "./todo.model";
 import TodoItem from "../../interfaces/todo";
 import "mocha";
 
 const expect = chai.expect;
-const testTodoItem: TodoItem = {
+const testTodoItem: Partial<TodoItem> = {
   /* tslint:disable:object-literal-sort-keys */
   name: "Go to the Gym",
   owner: "id:xdjlkfdsjlkjlk",
@@ -13,8 +13,8 @@ const testTodoItem: TodoItem = {
   complete: false,
   sessions: 0,
 }
-const invalidateTodoItem = (field: string): TodoItem => {
-  const testTodoItemData: TodoItem = Object.assign({}, testTodoItem);
+const invalidateTodoItem = (field: string): Partial<TodoItem> => {
+  const testTodoItemData: Partial<TodoItem> = Object.assign({}, testTodoItem);
   testTodoItemData[field] = "";
   return testTodoItemData;
 };

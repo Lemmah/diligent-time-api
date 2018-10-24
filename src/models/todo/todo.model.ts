@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import TodoItem from "./../../interfaces/todo";
 
 const Schema = mongoose.Schema;
 
@@ -33,11 +34,11 @@ const TodoSchema: mongoose.Schema = new Schema({
   },
 });
 
-let TodoModel: mongoose.Model<mongoose.Document>;
+let TodoModel: mongoose.Model<TodoItem>;
 try {
-  TodoModel = mongoose.model("Todo", TodoSchema);
+  TodoModel = mongoose.model<TodoItem>("Todo", TodoSchema);
 } catch (e) {
-  TodoModel = mongoose.model("Todo");
+  TodoModel = mongoose.model<TodoItem>("Todo");
 }
 
-export default TodoModel;
+export { TodoModel };

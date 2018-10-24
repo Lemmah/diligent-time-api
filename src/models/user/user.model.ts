@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import User from "./../../interfaces/user";
 
 const Schema = mongoose.Schema;
 
@@ -22,11 +23,11 @@ const UserSchema: mongoose.Schema = new Schema({
   },
 });
 
-let UserModel: mongoose.Model<mongoose.Document>;
+let UserModel: mongoose.Model<User>;
 try {
-  UserModel = mongoose.model("User", UserSchema);
+  UserModel = mongoose.model<User>("User", UserSchema);
 } catch (e) {
-  UserModel = mongoose.model("User");
+  UserModel = mongoose.model<User>("User");
 }
 
-export default UserModel;
+export { UserModel };

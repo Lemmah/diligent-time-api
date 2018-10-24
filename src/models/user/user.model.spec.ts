@@ -1,17 +1,17 @@
 import * as chai from "chai";
-import UserModel  from "./user.model";
+import { UserModel }  from "./user.model";
 import User from "../../interfaces/user";
 import "mocha";
 
 const expect = chai.expect;
-const testUser: User = {
+const testUser: Partial<User> = {
   name: "Lemayian JN",
   email: "test@lemayian.africa",
   password: "hashed_test_pass",
   location: "Nairobi, Kenya"
 };
-const invalidateUser = (field: string): User => {
-  const testUserData: User = Object.assign({}, testUser);
+const invalidateUser = (field: string): Partial<User> => {
+  const testUserData: Partial<User> = Object.assign({}, testUser);
   testUserData[field] = "";
   return testUserData;
 };
