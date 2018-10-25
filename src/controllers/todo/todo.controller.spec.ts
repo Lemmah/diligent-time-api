@@ -56,7 +56,7 @@ describe("Todo Controller Tests", () => {
     });
   });
 
-  describe("read", () => {
+  describe("readAll", () => {
     beforeEach(() => {
       sinon.stub(TodoModel, "find");
     });
@@ -74,7 +74,7 @@ describe("Todo Controller Tests", () => {
         json: sinon.stub(),
       };
 
-      await toDoController.read(<Request>req, <Response>res);
+      await toDoController.readAll(<Request>req, <Response>res);
 
       sinon.assert.called(TodoModel.find);
       sinon.assert.calledWith(res.status as sinon.SinonStub, 200);
@@ -86,6 +86,35 @@ describe("Todo Controller Tests", () => {
       (TodoModel.find as sinon.SinonStub).rejects(expectedError);
 
     });
+  });
+
+  describe("readOne", () => {
+    beforeEach(() => {
+      sinon.stub(TodoModel, "findOne");
+    });
+
+    afterEach(() => {
+      (TodoModel.findOne as sinon.SinonStub).restore();
+    });
+
+    it("should return one todo item with specified id", async () => {
+      (TodoModel.findOne as sinon.SinonStub).resolves(testTodoItem);
+      let req: Partial<Request> = {
+        params: {
+          id: "randomTestID",
+        }
+      };
+      let res: Partial<Response> = {
+        status: sinon.stub(),
+        json: sinon.stub(),
+      };
+
+      await toDoController.readOne(<Request>req, <Response>res);
+
+      sinon.assert.called(TodoModel.findOne);
+    });
+
+    xit("should throw an error if the specified todo item is not found");
   });
 
   describe("update", () => {

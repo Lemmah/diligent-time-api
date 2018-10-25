@@ -17,7 +17,7 @@ class TodoController {
     });
   }
 
-  public read(req: Request, res: Response): void {
+  public readAll(req: Request, res: Response): void {
     TodoModel.find({})
     .then((todos: Document[]): void => {
       res.status(200);
@@ -29,11 +29,26 @@ class TodoController {
     });
   }
 
+  public readOne(req: Request, res: Response): void {
+    TodoModel.findOne({ _id: req.params.id })
+    .then((todo: TodoItem | null): void | Error => {
+      if (!todo || !Object.keys(todo).length) {
+        throw new Error("TodoItem not found");
+      }
+      res.status(200);
+      res.json(todo);
+    })
+    .catch((error: Error) => {
+      res.status(500);
+      res.json(error);
+    });
+  }
+
   public update(req: Request, res: Response): void {
     const complete: boolean = req.body.complete;
     TodoModel.findById(req.params.id)
     .then((todo: TodoItem | null): TodoItem => {
-      if (!todo) {
+      if (!todo || !Object.keys(todo).length) {
         throw new Error("TodoItem not found");
       }
       todo.complete = complete;
