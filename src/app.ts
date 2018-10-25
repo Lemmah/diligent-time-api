@@ -3,6 +3,7 @@ import * as express from "express";
 import * as mongoose from "mongoose";
 import * as morgan from "morgan";
 import { mainRoutes } from "./routes/main.routes";
+import { todoRoutes } from "./routes/todo/todo.routes";
 
 class App {
   public app: express.Application;
@@ -19,6 +20,7 @@ class App {
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(morgan("dev"));
     this.app.use("/", mainRoutes);
+    this.app.use("/api/v1/todos/", todoRoutes);
   }
 
   private mongoSetup(): void {
