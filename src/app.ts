@@ -5,27 +5,14 @@ import * as morgan from "morgan";
 import { mainRoutes } from "./routes/main.routes";
 import { todoRoutes } from "./routes/todo/todo.routes";
 
-class App {
-  public app: express.Application;
-  public mongoUrl: string = process.env.MONGO_URL || "mongodb://localhost/diligentTime";
+const mongoUrl: string = process.env.MONGO_URL || "mongodb://localhost/diligentTime";
+mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
-  constructor() {
-    this.app = express();
-    this.config();
-    this.mongoSetup();
-  }
+const app: express.Application = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan("dev"));
+app.use("/", mainRoutes);
+app.use("/api/v1/todos/", todoRoutes);
 
-  private config(): void {
-    this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: false }));
-    this.app.use(morgan("dev"));
-    this.app.use("/", mainRoutes);
-    this.app.use("/api/v1/todos/", todoRoutes);
-  }
-
-  private mongoSetup(): void {
-    mongoose.connect(this.mongoUrl, { useNewUrlParser: true });
-  }
-}
-
-export default new App().app;
+export default app;
