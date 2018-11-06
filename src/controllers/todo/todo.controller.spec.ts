@@ -1,7 +1,7 @@
 import "mocha";
 import * as sinon from "sinon";
 import { Response, Request } from "express";
-import { toDoController } from "./todo.controller";
+import toDoController from "./todo.controller";
 import TodoItem from "../../interfaces/todo";
 
 const testTodoItem: Partial<TodoItem> = {
@@ -159,7 +159,7 @@ describe("Todo Controller Tests", () => {
 
   });
 
-  describe("delete", () => {
+  describe("deleteOne", () => {
     beforeEach(() => {
       sinon.stub(TodoModel, "remove");
     });
@@ -181,7 +181,7 @@ describe("Todo Controller Tests", () => {
         json: sinon.stub(),
       };
 
-      await toDoController.delete(<Request>req, <Response>res);
+      await toDoController.deleteOne(<Request>req, <Response>res);
 
       sinon.assert.called(TodoModel.remove);
       sinon.assert.calledWith(TodoModel.remove, { _id: req.params.id });

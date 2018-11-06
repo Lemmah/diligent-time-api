@@ -1,16 +1,9 @@
 import * as express from "express";
-import { mainController } from "../controllers/main.controller";
+import mainController from "../controllers/main.controller";
+import todoRoutes from "./todo/todo.routes";
 
-class MainRoutes {
-  public router: express.Router = express.Router();
+const router: express.Router = express.Router();
+router.get("/", mainController.root);
+router.use("/api/v1/todos/", todoRoutes);
 
-  constructor() {
-    this.config();
-  }
-
-  private config() {
-    this.router.get("/", mainController.root);
-  }
-}
-
-export const mainRoutes: express.Router = new MainRoutes().router;
+export default router;

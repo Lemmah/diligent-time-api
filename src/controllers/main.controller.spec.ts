@@ -1,7 +1,7 @@
 import "mocha";
 import * as sinon from "sinon";
 import { Response, Request } from "express";
-import { mainController } from "./main.controller";
+import mainController from "./main.controller";
 
 describe("Main Controller Tests", () => {
   describe("main controller", () => {
