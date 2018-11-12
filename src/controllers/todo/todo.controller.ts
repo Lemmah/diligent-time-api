@@ -1,81 +1,72 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Document } from "mongoose";
+
+import Error from "../../interfaces/error";
 import TodoItem from "../../interfaces/todo";
 import { TodoModel } from "./../../models/todo/todo.model";
 
-function create(req: Request, res: Response): void {
+const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const todoItem = new TodoModel(req.body);
-  todoItem.save()
-  .then((todo: Document): void => {
+  try {
+    const todo: Document = await todoItem.save();
     res.status(201);
-    res.json({ status: true, message: todo});
-  })
-  .catch((error: Error): void => {
-    res.status(500);
-    res.json({ status: false, error });
-  });
-}
+    res.json({ data: todo});
+  } catch (err) {
+    next(err);
+  }
+};
 
-function readAll(req: Request, res: Response): void {
-  TodoModel.find({})
-  .then((todos: Document[]): void => {
+const readAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const todos: Document[] = await TodoModel.find({});
     res.status(200);
     res.json(todos);
-  })
-  .catch((error: Error): void => {
-    res.status(500);
-    res.json(error.message);
-  });
-}
+  } catch (err) {
+    next(err);
+  }
+};
 
-function readOne(req: Request, res: Response): void {
-  TodoModel.findOne({ _id: req.params.id })
-  .then((todo: TodoItem | null): void | Error => {
-    if (!todo || !Object.keys(todo).length) {
-      throw new Error("TodoItem not found");
+const readOne = async (req: Request, res: Response, next: NextFunction): Promise<void>  => {
+  try {
+    const todo: TodoItem | null = await TodoModel.findOne({ _id: req.params.id });
+    if (!todo) {
+      const err: Error = new Error("TodoItem not found");
+      err.statusCode = 404;
+      throw err;
     }
     res.status(200);
     res.json(todo);
-  })
-  .catch((error: Error) => {
-    res.status(500);
-    res.json(error);
-  });
-}
+  } catch (err) {
+    next(err);
+  }
+};
 
-function update(req: Request, res: Response): void {
+const update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const complete: boolean = req.body.complete;
-  TodoModel.findById(req.params.id)
-  .then((todo: TodoItem | null): TodoItem => {
-    if (!todo || !Object.keys(todo).length) {
-      throw new Error("TodoItem not found");
+  try {
+    const todo: TodoItem | null = await TodoModel.findById(req.params.id);
+    if (!todo) {
+      const err: Error = new Error("TodoItem not found");
+      err.statusCode = 404;
+      throw err;
     }
     todo.complete = complete;
-    return todo;
-  })
-  .then((todo: TodoItem): Promise<TodoItem> => {
-    return todo.save();
-  })
-  .then((todo: TodoItem): void => {
+    const updatedTodoItem = await todo.save();
     res.status(200);
-    res.json(todo);
-  })
-  .catch((error: Error) => {
-    res.status(500);
-    res.json(error);
-  });
-}
+    res.json(updatedTodoItem);
+  } catch (err) {
+    next(err);
+  }
+};
 
-function deleteOne(req: Request, res: Response): void {
-  TodoModel.remove({ _id: req.params.id })
-  .then((todos: TodoItem[]) => {
-    res.status(200);
-    res.json({ status: true, message: "Todo Deleted Successfully!"});
-  })
-  .catch((error: Error) => {
-    res.status(500);
-    res.json({ status: false, error });
-  });
-}
+const deleteOne = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    await TodoModel.remove({ _id: req.params.id });
+    res.status(204);
+    res.json({});
+  } catch (err) {
+    next(err);
+  }
+};
 
 export default { create, readAll, readOne, update, deleteOne };
